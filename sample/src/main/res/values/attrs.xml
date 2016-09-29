@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="circleindexview">
+        <attr name="middleText" format="string"/>
+        <attr name="middleTextSize" format="float"/>
+        <attr name="bottomText" format="string"/>
+        <attr name="bottomTextSize" format="float"/>
+        <attr name="numberTextSize" format="float"/>
+    </declare-styleable>
+</resources>
