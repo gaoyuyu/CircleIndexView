@@ -6,10 +6,12 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
@@ -48,6 +50,62 @@ public class CircleIndexView extends View
     private float numberTextSize;
     private float middleTextSize;
     private float bottomTextSize;
+
+    private int outCircleColor;
+    private int inCircleColor;
+    private int numberColor;
+    private int middleTextColor;
+    private int bottomTextColor;
+
+    public int getOutCircleColor()
+    {
+        return outCircleColor;
+    }
+
+    public void setOutCircleColor(int outCircleColor)
+    {
+        this.outCircleColor = outCircleColor;
+    }
+
+    public int getInCircleColor()
+    {
+        return inCircleColor;
+    }
+
+    public void setInCircleColor(int inCircleColor)
+    {
+        this.inCircleColor = inCircleColor;
+    }
+
+    public int getNumberColor()
+    {
+        return numberColor;
+    }
+
+    public void setNumberColor(int numberColor)
+    {
+        this.numberColor = numberColor;
+    }
+
+    public int getMiddleTextColor()
+    {
+        return middleTextColor;
+    }
+
+    public void setMiddleTextColor(int middleTextColor)
+    {
+        this.middleTextColor = middleTextColor;
+    }
+
+    public int getBottomTextColor()
+    {
+        return bottomTextColor;
+    }
+
+    public void setBottomTextColor(int bottomTextColor)
+    {
+        this.bottomTextColor = bottomTextColor;
+    }
 
     public float getNumberTextSize()
     {
@@ -141,22 +199,19 @@ public class CircleIndexView extends View
 
     public CircleIndexView(Context context)
     {
-        super(context);
-        initPaint();
+        this(context, null);
     }
 
     public CircleIndexView(Context context, AttributeSet attrs)
     {
-        super(context, attrs);
-        initPaint();
-        initParams(context, attrs);
+        this(context, attrs, -1);
     }
 
     public CircleIndexView(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
-        initPaint();
         initParams(context, attrs);
+        initPaint();
     }
 
 
@@ -164,8 +219,8 @@ public class CircleIndexView extends View
     public CircleIndexView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
     {
         super(context, attrs, defStyleAttr, defStyleRes);
-        initPaint();
         initParams(context, attrs);
+        initPaint();
     }
 
     /**
@@ -173,13 +228,13 @@ public class CircleIndexView extends View
      */
     public void initPaint()
     {
-        outPaint.setColor(getResources().getColor(R.color.circleindexview_out_gray));
+        outPaint.setColor(getOutCircleColor());
         outPaint.setAntiAlias(true);
         outPaint.setStyle(Paint.Style.STROKE);
         outPaint.setStrokeCap(Paint.Cap.ROUND);
         outPaint.setStrokeWidth(12);
 
-        inPaint.setColor(getResources().getColor(R.color.circleindexview_in_green));
+        inPaint.setColor(getInCircleColor());
         inPaint.setAntiAlias(true);
         inPaint.setStyle(Paint.Style.STROKE);
         inPaint.setStrokeCap(Paint.Cap.ROUND);
@@ -201,9 +256,17 @@ public class CircleIndexView extends View
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.circleindexview);
         middleText = ta.getString(R.styleable.circleindexview_middleText);
         bottomText = ta.getString(R.styleable.circleindexview_bottomText);
-        middleTextSize = ta.getFloat(R.styleable.circleindexview_middleTextSize, 0.0f);
-        bottomTextSize = ta.getFloat(R.styleable.circleindexview_middleTextSize, 0.0f);
-        numberTextSize = ta.getFloat(R.styleable.circleindexview_numberTextSize, 0.0f);
+        numberTextSize = ta.getDimension(R.styleable.circleindexview_numberTextSize,
+                TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 20, context.getResources().getDisplayMetrics()));
+        middleTextSize = ta.getDimension(R.styleable.circleindexview_middleTextSize,
+                TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 15, context.getResources().getDisplayMetrics()));
+        bottomTextSize = ta.getDimension(R.styleable.circleindexview_bottomTextSize,
+                TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 15, context.getResources().getDisplayMetrics()));
+        outCircleColor = ta.getColor(R.styleable.circleindexview_outCircleColor, Color.LTGRAY);
+        inCircleColor = ta.getColor(R.styleable.circleindexview_inCircleColor, Color.GREEN);
+        numberColor = ta.getColor(R.styleable.circleindexview_numberColor, Color.GREEN);
+        middleTextColor = ta.getColor(R.styleable.circleindexview_middleTextColor, Color.LTGRAY);
+        bottomTextColor = ta.getColor(R.styleable.circleindexview_bottomTextColor, Color.LTGRAY);
         ta.recycle();
     }
 
@@ -224,17 +287,17 @@ public class CircleIndexView extends View
         canvas.drawArc(mRectF, startAngle, getInSweepAngle(), false, inPaint);
 
         //中心数字
-        middleTextPaint.setColor(getResources().getColor(R.color.circleindexview_in_green));
+        middleTextPaint.setColor(getNumberColor());
         middleTextPaint.setTextSize(getNumberTextSize());
         canvas.drawText(getIndexValue() + "", getCircleWidth() / 2, getCircleHeight() / 2, middleTextPaint);
 
         //中心文字(etc. Pm25)
-        middleTextPaint.setColor(getResources().getColor(R.color.circleindexview_sub_gray));
+        middleTextPaint.setColor(getMiddleTextColor());
         middleTextPaint.setTextSize(getMiddleTextSize());
         canvas.drawText(getMiddleText(), getCircleWidth() / 2, getCircleHeight() / 2 + 40, middleTextPaint);
 
         //底部文字(etc. 空气污染指数)
-        middleTextPaint.setColor(getResources().getColor(R.color.circleindexview_main_text));
+        middleTextPaint.setColor(getBottomTextColor());
         middleTextPaint.setTextSize(getBottomTextSize());
         canvas.drawText(getBottomText(), getCircleWidth() / 2, getCircleHeight() - 50, middleTextPaint);
 
@@ -254,7 +317,7 @@ public class CircleIndexView extends View
 
     private int measureWidth(int widthMeasureSpec)
     {
-        int result = 0;
+        int result = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200, getResources().getDisplayMetrics());
         int specMode = MeasureSpec.getMode(widthMeasureSpec);
         int specSize = MeasureSpec.getSize(widthMeasureSpec);
         switch (specMode)
@@ -263,10 +326,8 @@ public class CircleIndexView extends View
                 result = specSize;
                 break;
             case MeasureSpec.UNSPECIFIED:
-                result = 200;
                 break;
             case MeasureSpec.AT_MOST:
-                result = Math.min(result, specSize);
                 break;
         }
         setCircleWidth(result);
@@ -275,7 +336,7 @@ public class CircleIndexView extends View
 
     private int measureHeight(int heightMeasureSpec)
     {
-        int result = 0;
+        int result = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200, getResources().getDisplayMetrics());
         int specMode = MeasureSpec.getMode(heightMeasureSpec);
         int specSize = MeasureSpec.getSize(heightMeasureSpec);
 
@@ -285,10 +346,8 @@ public class CircleIndexView extends View
                 result = specSize;
                 break;
             case MeasureSpec.UNSPECIFIED:
-                result = 200;
                 break;
             case MeasureSpec.AT_MOST:
-                result = Math.min(result, specSize);
                 break;
         }
         setCircleHeight(result);

@@ -7,15 +7,15 @@ import android.content.Context;
  */
 public class MeasureUtil
 {
-    public static int getScreenWidth(Context mContext)
+    public static int getScreenWidth(Context context)
     {
-        int width = mContext.getResources().getDisplayMetrics().widthPixels;
+        int width = context.getResources().getDisplayMetrics().widthPixels;
         return width;
     }
 
-    public static int getScreenHeight(Context mContext)
+    public static int getScreenHeight(Context context)
     {
-        int height = mContext.getResources().getDisplayMetrics().heightPixels;
+        int height = context.getResources().getDisplayMetrics().heightPixels;
         return height;
     }
 }
