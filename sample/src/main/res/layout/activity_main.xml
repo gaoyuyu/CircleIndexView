@@ -19,7 +19,11 @@
         android:layout_height="150dp"
         circleindexview:middleText="Pm25"
         circleindexview:middleTextSize="25"
-        circleindexview:numberTextSize="35"/>
+        circleindexview:bottomText="空气污染指数"
+        circleindexview:bottomTextSize="15"
+        circleindexview:numberTextSize="35"
+
+        />
 
 
     <EditText

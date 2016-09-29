@@ -39,11 +39,11 @@ public class CircleIndexView extends View
     int mCenter = 0;
     int mRadius = 0;
 
-    private int pmValue;
+    private int indexValue;
     private String middleText = "N/A";
     private String bottomText = "";
-    private int pmWidth;
-    private int pmHeight;
+    private int circleWidth;
+    private int circleHeight;
     private float inSweepAngle;
 
     private float numberTextSize;
@@ -90,34 +90,34 @@ public class CircleIndexView extends View
         this.middleText = middleText;
     }
 
-    public int getPmValue()
+    public int getIndexValue()
     {
-        return pmValue;
+        return indexValue;
     }
 
-    public void setPmValue(int pmValue)
+    public void setIndexValue(int indexValue)
     {
-        this.pmValue = pmValue;
+        this.indexValue = indexValue;
     }
 
-    public int getPmWidth()
+    public int getCircleWidth()
     {
-        return pmWidth;
+        return circleWidth;
     }
 
-    public void setPmWidth(int pmWidth)
+    public void setCircleWidth(int circleWidth)
     {
-        this.pmWidth = pmWidth;
+        this.circleWidth = circleWidth;
     }
 
-    public int getPmHeight()
+    public int getCircleHeight()
     {
-        return pmHeight;
+        return circleHeight;
     }
 
-    public void setPmHeight(int pmHeight)
+    public void setCircleHeight(int circleHeight)
     {
-        this.pmHeight = pmHeight;
+        this.circleHeight = circleHeight;
     }
 
     public float getInSweepAngle()
@@ -215,8 +215,8 @@ public class CircleIndexView extends View
         Log.i(TAG, "===onDraw===");
         super.onDraw(canvas);
 
-        mCenter = getPmWidth() / 2;
-        mRadius = getPmWidth() / 2 - 50;
+        mCenter = getCircleWidth() / 2;
+        mRadius = getCircleWidth() / 2 - 50;
 
         Log.i(TAG, "mCenter：" + mCenter);
         Log.i(TAG, "mRadius：" + mRadius);
@@ -230,17 +230,25 @@ public class CircleIndexView extends View
         //外圆圈
         canvas.drawArc(mRectF, startAngle, sweepAngle, false, outPaint);
         //内圆圈
-        canvas.drawArc(mRectF, 135, getInSweepAngle(), false, inPaint);
+        canvas.drawArc(mRectF, startAngle, getInSweepAngle(), false, inPaint);
 
         //中心数字
         middleTextPaint.setColor(getResources().getColor(R.color.circleindexview_in_green));
         middleTextPaint.setTextSize(getNumberTextSize());
-        canvas.drawText(getPmValue() + "", getPmWidth() / 2, getPmHeight() / 2, middleTextPaint);
+        canvas.drawText(getIndexValue() + "", getCircleWidth() / 2, getCircleHeight() / 2, middleTextPaint);
 
         //中心文字(etc. Pm25)
         middleTextPaint.setColor(getResources().getColor(R.color.circleindexview_sub_gray));
         middleTextPaint.setTextSize(getMiddleTextSize());
-        canvas.drawText(getMiddleText(), getPmWidth() / 2, getPmHeight() / 2 + 40, middleTextPaint);
+        canvas.drawText(getMiddleText(), getCircleWidth() / 2, getCircleHeight() / 2 + 40, middleTextPaint);
+
+
+        //底部文字(etc. 空气污染指数)
+        middleTextPaint.setColor(getResources().getColor(R.color.circleindexview_main_text));
+        middleTextPaint.setTextSize(getBottomTextSize());
+        canvas.drawText(getBottomText(), getCircleWidth() / 2, getCircleHeight()-50 , middleTextPaint);
+
+
 
     }
 
@@ -275,8 +283,8 @@ public class CircleIndexView extends View
                 result = Math.min(result, specSize);
                 break;
         }
-        setPmWidth(result);
-        Log.e(TAG, "measureWidth===" + getPmWidth());
+        setCircleWidth(result);
+        Log.e(TAG, "measureWidth===" + getCircleWidth());
         return result;
     }
 
@@ -298,8 +306,8 @@ public class CircleIndexView extends View
                 result = Math.min(result, specSize);
                 break;
         }
-        setPmHeight(result);
-        Log.e(TAG, "measureHeight===" + getPmHeight());
+        setCircleHeight(result);
+        Log.e(TAG, "measureHeight===" + getCircleHeight());
         return result;
     }
 
@@ -324,7 +332,7 @@ public class CircleIndexView extends View
             public void onAnimationUpdate(ValueAnimator valueAnimator)
             {
                 int currentValue = (int) valueAnimator.getAnimatedValue();
-                setPmValue(currentValue);
+                setIndexValue(currentValue);
                 invalidate();
             }
         });
