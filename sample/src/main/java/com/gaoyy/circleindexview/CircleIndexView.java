@@ -10,7 +10,6 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
@@ -174,7 +173,6 @@ public class CircleIndexView extends View
      */
     public void initPaint()
     {
-        Log.i(TAG, "=====initPaint======");
         outPaint.setColor(getResources().getColor(R.color.circleindexview_out_gray));
         outPaint.setAntiAlias(true);
         outPaint.setStyle(Paint.Style.STROKE);
@@ -212,20 +210,13 @@ public class CircleIndexView extends View
     @Override
     protected void onDraw(Canvas canvas)
     {
-        Log.i(TAG, "===onDraw===");
         super.onDraw(canvas);
 
         mCenter = getCircleWidth() / 2;
         mRadius = getCircleWidth() / 2 - 50;
 
-        Log.i(TAG, "mCenter：" + mCenter);
-        Log.i(TAG, "mRadius：" + mRadius);
-
         mRectF = new RectF(mCenter - mRadius, mCenter - mRadius, mCenter
                 + mRadius, mCenter + mRadius);
-
-        Log.i(TAG, "x：" + (mCenter - mRadius) + "   x : " + (mCenter - mRadius) + "   y : " + (mCenter
-                + mRadius) + "  y : " + (mCenter + mRadius));
 
         //外圆圈
         canvas.drawArc(mRectF, startAngle, sweepAngle, false, outPaint);
@@ -242,23 +233,18 @@ public class CircleIndexView extends View
         middleTextPaint.setTextSize(getMiddleTextSize());
         canvas.drawText(getMiddleText(), getCircleWidth() / 2, getCircleHeight() / 2 + 40, middleTextPaint);
 
-
         //底部文字(etc. 空气污染指数)
         middleTextPaint.setColor(getResources().getColor(R.color.circleindexview_main_text));
         middleTextPaint.setTextSize(getBottomTextSize());
-        canvas.drawText(getBottomText(), getCircleWidth() / 2, getCircleHeight()-50 , middleTextPaint);
-
-
+        canvas.drawText(getBottomText(), getCircleWidth() / 2, getCircleHeight() - 50, middleTextPaint);
 
     }
-
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh)
     {
         super.onSizeChanged(w, h, oldw, oldh);
     }
-
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
@@ -284,7 +270,6 @@ public class CircleIndexView extends View
                 break;
         }
         setCircleWidth(result);
-        Log.e(TAG, "measureWidth===" + getCircleWidth());
         return result;
     }
 
@@ -307,7 +292,6 @@ public class CircleIndexView extends View
                 break;
         }
         setCircleHeight(result);
-        Log.e(TAG, "measureHeight===" + getCircleHeight());
         return result;
     }
 
