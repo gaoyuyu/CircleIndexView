@@ -43,17 +43,24 @@ the Customized properties are in the follow table:
 |bottomTextSize|dimension|15sp|
 
 This picture will give you guys a more clear explanation.
+
 ![images](https://github.com/gaoyuyu/CircleIndexView/raw/master/captures/properties_details.png)
 
+When you want to update data,just do like this:
+```Java
+circleIndexView.updateIndex(50);
+```
+
+
 ##Tips
-In Order to make CircleIndexView pretty nice,you might be best to set CircleIndexView `layout_width`/`layout_height` attributes an exact value(sp)，and the values of `layout_width` and `layout_height` are equal.
+In order to make CircleIndexView pretty nice,you might be best to set its `layout_width`/`layout_height` attributes an exact value(sp)，and the values of `layout_width` and `layout_height` are equal.(NOTICE. it will be 200sp as default value whether you set `layout_width`/`layout_height` to `match_parent` or `wrap_content`)
 
 ##Why do I want to Customize This Stuff
 One day,I saw the built-in Weather App on my MIUI8 OS,all of its
 layout and interface effect are very good-looking,but this type of
-indicator is indeed rigid,didn't see any animations (may be,it's under another Layout,so can't see the effect when finished loading data?who konws...) , so I write for my own satisfaction.
+indicator is indeed rigid,didn't see any animations (may be,it's under another Layout,so can't see the effect when finished loading data?who knows...) , so I write for my own satisfaction.
 
-Simple Reason
+Simple Reason.
 
 ## License
 
