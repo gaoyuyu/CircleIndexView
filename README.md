@@ -5,9 +5,28 @@ A Smooth Circular digital indicator with text
 
 ##How to Use
 
-copy `CircleIndexView.java` to your project!
+If you want to use this libray,you only have to download `circleindexview` project,import it into your workspace and add the project as a library in your android project settings.
 
-define the view in xml like this:
+Or you can also use gradle dependency in your Project/Module build.gradle file like this:
+```
+allprojects {
+    repositories {
+        jcenter()
+        maven { url "https://dl.bintray.com/gaoyuyu/Maven" }
+    }
+}
+```
+```
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:24.2.0'
+//    compile project(path: ':circleindexview')
+    compile 'com.gaoyy.circleindexview:circleindexview:1.0.0'
+}
+```
+
+Then define the view in xml like this:
 
 ```xml
     <com.gaoyy.circleindexview.CircleIndexView
@@ -51,12 +70,11 @@ When you want to update data,just do like this:
 circleIndexView.updateIndex(50);
 ```
 
-
 ##Tips
 In order to make CircleIndexView pretty nice,you might be best to set its `layout_width`/`layout_height` attributes an exact value(sp)，and the values of `layout_width` and `layout_height` are equal.(NOTICE. it will be 200sp as default value whether you set `layout_width`/`layout_height` to `match_parent` or `wrap_content`)
 
 ##Why do I want to Customize This Stuff
-One day,I saw the built-in Weather App on my MIUI8 OS,all of its
+I saw the built-in Weather App on my MIUI8 OS,all of its
 layout and interface effect are very good-looking,but this type of
 indicator is indeed rigid,didn't see any animations (may be,it's under another Layout,so can't see the effect when finished loading data?who knows...) , so I write for my own satisfaction.
 
