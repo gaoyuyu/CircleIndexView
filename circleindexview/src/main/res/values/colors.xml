@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+    <color name="circleindexview_out_gray">#e8e8e8</color>
+    <color name="circleindexview_in_green">#53c41a</color>
+
+
+    <color name="circleindexview_sub_gray">#c4c4c4</color>
+    <color name="circleindexview_main_text">#5b5b5b</color>
+</resources>
